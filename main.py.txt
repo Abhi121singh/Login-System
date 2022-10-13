@@ -1,0 +1,481 @@
+from tkinter import*
+from tkinter import messagebox
+from tkinter import ttk
+import sqlite3
+
+class firstpage:
+    def __init__(self,root):
+        self.root=root
+        self.root.title("project")
+        self.root.geometry("1600x900+0+0")
+        
+        
+        self.FrontFrame = Frame(self.root, bg="antiquewhite3")
+        self.FrontFrame.place(x=0, y=0, width=1600, height=900)
+
+        self.filename = PhotoImage(file="room.png")
+        bg_l = Label(self.FrontFrame, image=self.filename).pack()
+
+        self.StudentFrame = Frame(self.FrontFrame, bg="white smoke")
+        self.StudentFrame.place(x=100, y=150, width=440, height=400)
+
+        str = Label(self.StudentFrame, text="Student", font=("times new roman", 35, "bold"), fg="black",bg="white smoke")
+        str.pack(pady=10)
+
+        self.filname = PhotoImage(file="student.png")
+        bg_lbl = Label(self.StudentFrame, image=self.filname).pack(pady=20)
+
+        resetbtn = Button(self.StudentFrame,command=self.login_window_fun, text="Click Me", font=("times new roman", 15, "bold"), fg="black",bg="white", bd=3, relief=RIDGE)
+        resetbtn.pack(pady=30)
+
+        self.TeacherFrame = Frame(self.FrontFrame, bg="white smoke")
+        self.TeacherFrame.place(x=800, y=150, width=440, height=400)
+
+        str = Label(self.TeacherFrame, text="Teacher", font=("times new roman", 35, "bold"), fg="black", bg="white smoke")
+        str.pack(pady=10)
+
+        self.tfile = PhotoImage(file="teacher.png")
+        bg_lbl = Label(self.TeacherFrame, image=self.tfile).pack(pady=20)
+
+        resetbtn = Button(self.TeacherFrame, text="Click Me", font=("times new roman", 15, "bold"), fg="black",bg="white", bd=3, relief=RIDGE)
+        resetbtn.pack(pady=30)
+    
+        
+        resetbtn=Button(self.StudentFrame,command=self.login_window_fun,text="student",font=("times new roman",15,"bold"),fg="white",bg="black",bd=3,relief=RIDGE)
+        resetbtn.place(x=40,y=500,width=120 ,height=35 )
+         #button for exit
+        
+        #exitbtn=Button(self.FrontFrame,text="exit",font=("times new roman",15,"bold"),fg="white",bg="black",bd=3,relief=RIDGE,command=self.Exit)
+        #exitbtn.place(x=1200,y=20,width=60 ,height=35 )
+        
+    def Exit(self):
+        Exit=messagebox.askyesno("Exit","confirm if you want to exit")
+        if Exit>0 :
+            self.root.destroy()
+            
+           
+        
+    def login_window_fun(self):
+        self.top=Toplevel()
+        self.top.title("Login")
+        self.top.geometry("1600x900+0+0")
+        
+        
+        self.username_var=StringVar()
+        self.loginpassword_var=StringVar()
+         
+        self.filedata = PhotoImage(file="bg1.png")
+        bg_log = Label(self.top, image=self.filedata).pack()    
+        
+        self.LoginFrame=Frame(self.top,bg="white smoke")
+        self.LoginFrame.place(x=530,y=170,width=340,height=450)
+        
+        
+        self.IG = PhotoImage(file="login.png")
+        bg_log = Label(self.LoginFrame, image=self.IG).pack(pady=7)
+        # frame ke andar ki setting
+        
+        get_str=Label(self.LoginFrame,text="Get Started",font=("times new roman",30,"bold"),fg="black",bg="white smoke")
+        get_str.pack()
+        
+        #label and entry  used for user name and password
+        
+        username=Label(self.LoginFrame,text="Username",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        username.place(x=40,y=155)
+        txtuser=Entry(self.LoginFrame,font=("times new roman",15,"bold"),bd=5,textvariable=self.username_var)
+        txtuser.place(x=40,y=180,width=270)
+        
+        password=Label(self.LoginFrame,text="Password",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        password.place(x=40,y=225)
+        txtpass=Entry(self.LoginFrame,font=("times new roman",15,"bold"),bd=5,textvariable=self.loginpassword_var,show='*')
+        txtpass.place(x=40,y=250,width=270)
+        
+        #button for login
+        
+        loginbtn=Button(self.LoginFrame,command=self.Login,text="Login",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE)
+        loginbtn.place(x=110,y=300,width=120,height=35)
+        
+        #registration button
+        registrationbtn=Button(self.LoginFrame,command=self.Registration,text="new user Registration",font=("times new roman",10,"bold"),borderwidth=0,fg="black",bg="white smoke",relief=RIDGE)
+        registrationbtn.place(x=14,y=350,width=160)
+        
+        #forget password button 
+        registrationbtn=Button(self.LoginFrame,command=self.forget,text="forget password",font=("times new roman",10,"bold"),borderwidth=0,fg="black",bg="white smoke",relief=RIDGE)
+        registrationbtn.place(x=15,y=370,width=121)
+    
+    
+        #button for exit
+        
+        exitbtn=Button(self.LoginFrame,text="X",font=("",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE,command=self.ExitLogin)
+        exitbtn.place(x=300,y=0,width=40 ,height=30 )
+        
+    def ExitLogin(self):
+        Exit=messagebox.askyesno("Exit","confirm if you want to exit",parent=self.LoginFrame)
+        if Exit>0 :
+            self.top.destroy()
+        
+    def Registration(self):
+        
+        
+        self.top.title("Registartion")
+        self.top.geometry("1600x900+0+0")
+        
+        self.name_var=StringVar()
+        self.fathername_var=StringVar()
+        self.gender_var=StringVar()
+        self.dob_var=StringVar()
+        self.mobileno_var=StringVar()
+        self.email_var=StringVar()
+        self.courses_var=StringVar()
+        self.address_var=StringVar()
+        self.city_var=StringVar()
+        self.state_var=StringVar()
+        self.password_var=StringVar()
+        self.confirmPassword_var=StringVar()
+        
+        
+    
+      #adding frame in root
+        
+        self.frame=Frame(self.top,bg="white smoke")
+        self.frame.place(x=0,y=0,width=1600,height=900)
+        
+        # frame ke andar ki setting
+        
+        #reg_lab=Label(self.frame,text="STUDENT REGISTRATION FORM ",font=("times new roman",20,"bold"),fg="red",bg="white smoke")
+        #reg_lab.place(x=400,y=60)
+        
+        self.imgd = PhotoImage(file="btn.png")
+        bg_log = Label(self.frame, image=self.imgd).place(x=470,y=10)
+        
+ 
+     #label and entry  used for user name and password
+        
+        name =Label(self.frame,text="Candidate Name",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        name.place(x=60,y=155)
+        txtname=Entry(self.frame,textvariable=self.name_var,font=("times new roman",15,"bold"),bd=5)
+        txtname.place(x=210,y=155,width=200)
+       
+        fathername =Label(self.frame,text="Father name",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        fathername.place(x=60,y=200)
+        txtfathername=Entry(self.frame,textvariable=self.fathername_var,font=("times new roman",15,"bold"),bd=5)
+        txtfathername.place(x=210,y=200,width=200)
+        
+        gender =Label(self.frame,text="Gender",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        gender.place(x=60,y=245)
+        txtgender=Entry(self.frame,textvariable=self.gender_var,font=("times new roman",15,"bold"),bd=5)
+        txtgender.place(x=210,y=245,width=200)
+        
+        dob =Label(self.frame,text="DOB",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        dob.place(x=60,y=290)
+        txtdob=Entry(self.frame,textvariable=self.dob_var,font=("times new roman",15,"bold"),bd=5)
+        txtdob.place(x=210,y=290,width=200)
+        
+        
+        mobileno =Label(self.frame,text="Mobile No",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        mobileno.place(x=60,y=335)
+        txtmobileno=Entry(self.frame,textvariable=self.mobileno_var,font=("times new roman",15,"bold"),bd=5)
+        txtmobileno.place(x=210,y=335,width=200)
+     
+        emailid =Label(self.frame,text="Email",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        emailid.place(x=60,y=380)
+        txtemailid=Entry(self.frame,textvariable=self.email_var,font=("times new roman",15,"bold"),bd=5)
+        txtemailid.place(x=210,y=380,width=200)
+       
+    #next row
+    
+        Courses =Label(self.frame,text="Courses",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        Courses.place(x=800,y=155)
+        txtCourses=Entry(self.frame,textvariable=self.courses_var,font=("times new roman",15,"bold"),bd=5)
+        txtCourses.place(x=970,y=155,width=200)
+        
+        Address =Label(self.frame,text="Address",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        Address.place(x=800,y=200)
+        txtAddress=Entry(self.frame,textvariable=self.address_var,font=("times new roman",15,"bold"),bd=5)
+        txtAddress.place(x=970,y=200,width=200)
+        
+        city =Label(self.frame,text="City",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        city.place(x=800,y=245)
+        txtcity=Entry(self.frame,textvariable=self.city_var,font=("times new roman",15,"bold"),bd=5)
+        txtcity.place(x=970,y=245,width=200)
+       
+        state =Label(self.frame,text="State",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        state.place(x=800,y=290)
+        txtstate=Entry(self.frame,textvariable=self.state_var,font=("times new roman",15,"bold"),bd=5)
+        txtstate.place(x=970,y=290,width=200)
+        
+        
+        
+        password =Label(self.frame,text="Password",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        password.place(x=800,y=335)
+        txtpassword=Entry(self.frame,textvariable=self.password_var,font=("times new roman",15,"bold"),show='*',bd=5)
+        txtpassword.place(x=970,y=335,width=200)
+        
+        conpass =Label(self.frame,text="Confirm Password",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        conpass.place(x=800,y=380)
+        txtpass=Entry(self.frame,textvariable=self.confirmPassword_var,font=("times new roman",15,"bold"),show='*',bd=5)
+        txtpass.place(x=970,y=380,width=200)
+        
+    
+        #button for login
+        
+        loginbtn=Button(self.frame,text="Sign Up",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE,command=self.insert)
+        loginbtn.place(x=900,y=500,width=120 ,height=35 )
+        
+        loginbtn=Button(self.frame,text="Go To Login",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE,command=self.frame.destroy)
+        loginbtn.place(x=1100,y=500,width=120 ,height=35 )
+    
+    
+        #button for reset
+        
+        resetbtn=Button(self.frame,command=self.Reset,text="Reset",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE)
+        resetbtn.place(x=40,y=500,width=120 ,height=35 )
+        
+         #button for exit
+        
+        #exitbtn=Button(frame,text="exit",font=("times new roman",15,"bold"),fg="white",bg="black",bd=3,relief=RIDGE)
+        #exitbtn.place(x=1200,y=20,width=60 ,height=35 )
+        
+    def Reset(self):
+        self.name_var.set("")
+        self.fathername_var.set("")
+        self.gender_var.set("")
+        self.dob_var.set("")
+        self.mobileno_var.set("")
+        self.email_var.set("")
+        self.courses_var.set("")
+        self.address_var.set("")
+        self.city_var.set("")
+        self.state_var.set("")
+        self.password_var.set("")
+        self.confirmPassword_var.set("")
+    
+    def insert(self):
+        con=sqlite3.connect("AjayDatabase.db")
+        cur=con.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS Students(name text,father text,gender text,dob text,mob text,email text,course text,address text,city text,state text,password text)")
+        
+        if self.name_var.get()=="" or self.fathername_var.get()=="" or self.gender_var.get()=="" or self.dob_var.get()=="" or self.mobileno_var.get()=="" or self.email_var.get()=="" or self.courses_var.get()==""  or self.address_var.get()=="" or self.city_var.get()=="" or self.state_var.get()=="" or self.password_var.get()=="" :
+            messagebox.showerror("Status","Fill all details",parent=self.frame)
+        elif self.password_var.get()==self.confirmPassword_var.get():
+            cur.execute("INSERT INTO Students VALUES(:name,:father,:gender,:dob,:mob,:email,:course,:address,:city,:state,:password)",{'name':self.name_var.get(),'father':self.fathername_var.get(),'gender':self.gender_var.get(),'dob':self.dob_var.get(),'mob':self.mobileno_var.get(),'email':self.email_var.get(),'course':self.courses_var.get(),'address':self.address_var.get(),'city':self.city_var.get(),'state':self.state_var.get(),'password':self.password_var.get()})
+            messagebox.showinfo("Status","Submit Successfully!",parent=self.frame)
+            self.name_var.set("")
+            self.fathername_var.set("")
+            self.gender_var.set("")
+            self.dob_var.set("")
+            self.mobileno_var.set("")
+            self.email_var.set("")
+            self.courses_var.set("")
+            self.address_var.set("")
+            self.city_var.set("")
+            self.state_var.set("")
+            self.password_var.set("")
+            self.confirmPassword_var.set("")
+            
+            self.frame.destroy()
+            
+        else:
+            messagebox.showerror("Sign up Status","Password Not Match",parent=self.frame)
+        
+        con.commit()    
+        con.close()
+        
+    def Login(self):
+        un=self.username_var.get()
+        up=self.loginpassword_var.get()
+        
+        self.tname_var=StringVar()
+        self.tfathername_var=StringVar()
+        self.tgender_var=StringVar()
+        self.tdob_var=StringVar()
+        self.tmobileno_var=StringVar()
+        self.temail_var=StringVar()
+        self.tcourses_var=StringVar()
+        self.taddress_var=StringVar()
+        self.tcity_var=StringVar()
+        self.tstate_var=StringVar()
+        
+        conn=sqlite3.connect("AjayDatabase.db")
+        cur=conn.cursor()
+        find_user = ('SELECT * FROM Students WHERE email = ? and password = ?')
+        cur.execute(find_user,[(self.username_var.get()),(self.loginpassword_var.get())])
+        result = cur.fetchall()
+        
+        if un=="" or up=="":
+            messagebox.showerror("Login Status","Fill all details",parent=self.LoginFrame)
+        else:
+            if result:
+                for i in result:
+                    messagebox.showinfo("Login Status","Logged in Successfully!",parent=self.LoginFrame)
+                    self.username_var.set("")
+                    self.loginpassword_var.set("")
+                    
+                    
+                    self.tname_var.set(i[0])
+                    self.tfathername_var.set(i[1])
+                    self.tgender_var.set(i[2])
+                    self.tdob_var.set(i[3])
+                    self.tmobileno_var.set(i[4])
+                    self.temail_var.set(i[5])
+                    self.tcourses_var.set(i[6])
+                    self.taddress_var.set(i[7])
+                    self.tcity_var.set(i[8])
+                    self.tstate_var.set(i[9])
+                    
+                    self.LoginFrame2=Frame(self.top,bg="white smoke")
+                    self.LoginFrame2.place(x=470,y=85,width=400,height=550)
+
+
+
+                    userdetail=Label(self.LoginFrame2,text="User Detail",font=("times new roman",25,"bold"),fg="red",bg="white smoke")
+                    userdetail.pack()
+
+                    tname=Label(self.LoginFrame2,text="Name",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    tname.place(x=40,y=100)
+                    tname=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tname_var,state='readonly')
+                    tname.place(x=140,y=100)
+
+                    fname=Label(self.LoginFrame2,text="Father",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    fname.place(x=40,y=140)
+                    fentry=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tfathername_var,state='readonly')
+                    fentry.place(x=140,y=140)
+
+                    genderlbl=Label(self.LoginFrame2,text="Gender",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    genderlbl.place(x=40,y=180)
+                    gentry=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tgender_var,state='readonly')
+                    gentry.place(x=140,y=180)
+
+                    doblbl=Label(self.LoginFrame2,text="Dob",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    doblbl.place(x=40,y=220)
+                    dentry=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tdob_var,state='readonly')
+                    dentry.place(x=140,y=220)
+
+                    moblbl=Label(self.LoginFrame2,text="Mob No",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    moblbl.place(x=40,y=260)
+                    mob=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tmobileno_var,state='readonly')
+                    mob.place(x=140,y=260)
+
+                    emaillbl=Label(self.LoginFrame2,text="Email",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    emaillbl.place(x=40,y=300)
+                    eentry=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.temail_var,state='readonly')
+                    eentry.place(x=140,y=300)
+
+                    courselbl=Label(self.LoginFrame2,text="Course",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    courselbl.place(x=40,y=340)
+                    cou=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tcourses_var,state='readonly')
+                    cou.place(x=140,y=340)
+
+                    courselbl=Label(self.LoginFrame2,text="Address",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    courselbl.place(x=40,y=380)
+                    cou=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.taddress_var,state='readonly')
+                    cou.place(x=140,y=380)
+
+                    courselbl=Label(self.LoginFrame2,text="City",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    courselbl.place(x=40,y=420)
+                    cou=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tcity_var,state='readonly')
+                    cou.place(x=140,y=420)
+
+                    courselbl=Label(self.LoginFrame2,text="State",font=("times new roman",18,"bold"),fg="black",bg="white smoke")
+                    courselbl.place(x=40,y=460)
+                    cou=Entry(self.LoginFrame2,font=("times new roman",15,"bold"),textvariable=self.tstate_var,state='readonly')
+                    cou.place(x=140,y=460)
+
+                    btn=Button(self.LoginFrame2,text="Ok",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE,command=self.LoginFrame2.destroy)
+                    btn.place(x=190,y=500)
+        
+            else:
+                messagebox.showerror("Login Status","Invalid Username or Password",parent=self.LoginFrame)
+                self.username_var.set("")
+                self.loginpassword_var.set("")
+        conn.commit()
+        conn.close()
+        
+    def forget(self):
+        
+        self.top.title("Forget password")
+        self.top.geometry("1600x900+0+0")
+         
+        self.forget=Frame(self.top,bg="white")
+        self.forget.place(x=0,y=0,width=1600,height=900)
+        
+        self.imgdata = PhotoImage(file="bg1.png")
+        bg_log = Label(self.forget, image=self.imgdata).pack() 
+        
+        self.frame2=Frame(self.top,bg="white smoke")
+        self.frame2.place(x=530,y=170,width=340,height=420)
+        
+        self.forgetusername=StringVar()
+        self.forgetpassword=StringVar()
+        self.forgetconfirmpassword=StringVar()
+            
+            
+        l=Label(self.frame2,text="Forget Password",font=("times new roman",20,"bold"),fg="red",bg="white smoke")
+        l.place(x=78,y=10)
+            
+        enterusername =Label(self.frame2,text="Enter Username",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        enterusername.place(x=60,y=80)
+        
+        enterpassword=Entry(self.frame2,font=("times new roman",15,"bold"),bd=5,textvariable=self.forgetusername)
+        enterpassword.place(x=60,y=120,width=200)
+        
+        
+        confirmpassword =Label(self.frame2,text="New Password",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        confirmpassword.place(x=60,y=170)
+        enterconfirmpassword=Entry(self.frame2,font=("times new roman",15,"bold"),bd=5,textvariable=self.forgetpassword,show='*')
+        enterconfirmpassword.place(x=60,y=210,width=200)
+        
+            
+        confirmpassword=Label(self.frame2,text="Confirm password",font=("times new roman",15,"bold"),fg="black",bg="white smoke")
+        confirmpassword.place(x=60,y=260)
+        self.txtconfirmpassword=Entry(self.frame2,font=("times new roman",15,"bold"),bd=5,textvariable=self.forgetconfirmpassword,show='*')     
+        self.txtconfirmpassword.place(x=60,y=300,width=200)    
+             
+                
+                
+            # reset button
+        resetbtn=Button(self.frame2,text="Submit",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE,command=self.ForgetPassword)
+        resetbtn.place(x=27,y=360,width=120 ,height=35 )
+        
+        resetbtn=Button(self.frame2,text="Back",font=("times new roman",15,"bold"),fg="black",bg="red",bd=3,relief=RIDGE,command=self.BACK)
+        resetbtn.place(x=180,y=360,width=120 ,height=35 )
+        
+    def BACK(self):
+        self.frame2.destroy()
+        self.forget.destroy()
+        
+    def ForgetPassword(self):
+        conn=sqlite3.connect("AjayDatabase.db")
+        cur=conn.cursor()
+        
+        find_username = ('SELECT * FROM Students WHERE email = ?')
+        cur.execute(find_username,[(self.forgetusername.get())])
+        result = cur.fetchall()
+        
+        if self.forgetusername.get()=="" or self.forgetpassword=="" or self.forgetconfirmpassword.get()=="":
+            messagebox.showerror("Forget Status","Fill all details",parent=self.LoginFrame)
+        else:
+            if result:
+                for i in result:
+                    if self.forgetpassword.get()==self.forgetconfirmpassword.get():
+                        cur.execute("UPDATE Students SET password=? where email=?",(self.forgetpassword.get(),self.forgetusername.get()))
+                        messagebox.showinfo("Status","Password Change Successfully!",parent=self.frame2)
+                        self.forgetusername.set("")
+                        self.forgetpassword.set("")
+                        self.forgetconfirmpassword.set("")
+                        
+                    else:
+                        messagebox.showerror("Status","Password and Confirm Password Not Match",parent=self.frame2)
+                    
+            else:
+                messagebox.showerror("Status","Invalid User",parent=self.frame2)
+                self.username_var.set("")
+                self.loginpassword_var.set("")
+        conn.commit()
+        conn.close()
+        self.BACK()
+        
+    
+root=Tk()
+obj=firstpage(root)
+root.mainloop()
